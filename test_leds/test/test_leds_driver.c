@@ -51,3 +51,9 @@ void test_TurnOnAllLeds(void)
     LedDriver_TurnAllOn();
     TEST_ASSERT_EQUAL_HEX16(0xffff, virtualLeds);
 }
+
+void test_TurnOffAllLeds(void)
+{
+    LedDriver_TurnAllOff();
+    TEST_ASSERT_EQUAL_HEX16(0x0000, virtualLeds);
+}
