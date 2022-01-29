@@ -8,6 +8,7 @@ static bool IsLedOutOfBounds(int ledNumber);
 static void setLedImageBit(int ledNumber);
 static uint16_t convertLedNumberToBit(int ledNumber);
 static void updateHardware(void);
+static void clearLedImageBit(int ledNumber);
 
 void LedDriver_Create(uint16_t * address)
 {
@@ -22,6 +23,15 @@ void LedDriver_TurnOn(int ledNumber)
         return;
 
     setLedImageBit(ledNumber);
+    updateHardware();
+}
+
+void LedDriver_TurnOff(int ledNumber)
+{
+    if (IsLedOutOfBounds(ledNumber))
+        return;
+
+    clearLedImageBit(ledNumber);
     updateHardware();
 }
 
@@ -44,4 +54,9 @@ static uint16_t convertLedNumberToBit(int ledNumber)
 static void updateHardware(void)
 {
     *ledsAddress = ledsImage;
+}
+
+static void clearLedImageBit(int ledNumber)
+{
+    ledsImage &= ~convertLedNumberToBit(ledNumber);
 }
